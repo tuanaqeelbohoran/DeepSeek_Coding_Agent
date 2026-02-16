@@ -1,5 +1,7 @@
 # DeepSeek Agentic AI (Unsloth)
 
+<img width="1854" height="958" alt="Screenshot from 2026-02-16 15-58-29" src="https://github.com/user-attachments/assets/8da5de54-3524-4a7b-b119-182186331ae3" />
+
 Autonomous agent loop powered by DeepSeek + Unsloth, with:
 
 - CLI runner
