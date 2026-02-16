@@ -1,0 +1,10 @@
+unsloth
+unsloth_zoo
+transformers>=4.49.0
+torch
+huggingface_hub
+fastapi
+uvicorn
+httpx
+pytest
+pytest-asyncio

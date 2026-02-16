@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek Agent GUI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="ambient"></div>
+  <header class="topbar">
+    <h1>DeepSeek Agent Console</h1>
+    <div id="status-pill" class="status-pill idle">Idle</div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <div class="panel-title-row">
+          <h2>Runs</h2>
+          <button id="refresh-runs" class="ghost-button" type="button">Refresh</button>
+        </div>
+        <div id="run-list" class="run-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title-row">
+          <h2>Workspace</h2>
+          <button id="refresh-files" class="ghost-button" type="button">Refresh</button>
+        </div>
+        <label class="input-label" for="workspace-input">Path</label>
+        <input id="workspace-input" class="text-input" type="text" value=".">
+        <label class="input-label" for="upload-destination-input">Upload Destination</label>
+        <input id="upload-destination-input" class="text-input" type="text" value=".">
+        <input id="file-upload-input" class="file-input" type="file" multiple>
+        <div class="button-row">
+          <button id="upload-files-button" class="ghost-button" type="button">Upload Files</button>
+        </div>
+        <pre id="file-tree" class="file-tree"></pre>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title-row">
+          <h2>Session Memory</h2>
+          <div class="button-row">
+            <button id="refresh-memory" class="ghost-button" type="button">Refresh</button>
+            <button id="clear-memory" class="ghost-button" type="button">Clear</button>
+          </div>
+        </div>
+        <div id="memory-list" class="memory-list"></div>
+      </section>
+    </aside>
+
+    <main class="main">
+      <section class="insights">
+        <div class="insight-item">
+          <div class="insight-label">Thinking Pattern</div>
+          <div id="pattern-text" class="insight-value">idle</div>
+        </div>
+        <div class="insight-item progress-item">
+          <div class="insight-label">Task Progress</div>
+          <div class="progress-row">
+            <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+            <div id="progress-text" class="progress-text">0%</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="timeline" class="timeline"></section>
+
+      <form id="task-form" class="composer">
+        <label for="task-input" class="input-label">Task</label>
+        <textarea id="task-input" class="task-input" placeholder="Example: Create a FastAPI app with tests and run pytest." required></textarea>
+
+        <div class="controls">
+          <div class="control control-wide">
+            <label for="image-path-input">Image Path For OCR (optional)</label>
+            <input id="image-path-input" type="text" placeholder="relative path in workspace">
+          </div>
+          <div class="control control-wide image-upload-row">
+            <label for="image-upload-input">Upload Image (optional)</label>
+            <div class="inline-upload">
+              <input id="image-upload-input" class="file-input" type="file" accept="image/*">
+              <button id="upload-image-button" class="ghost-button" type="button">Upload Image</button>
+              <button id="clear-image-button" class="ghost-button" type="button">Clear</button>
+            </div>
+          </div>
+          <div class="control control-wide">
+            <label for="coder-model-input">Coder Model (optional)</label>
+            <input id="coder-model-input" type="text" placeholder="unsloth/DeepSeek-R1-0528-Qwen3-8B-unsloth-bnb-4bit">
+          </div>
+          <div class="control">
+            <label for="max-steps-input">Max Steps</label>
+            <input id="max-steps-input" type="number" min="1" max="200" value="15">
+          </div>
+          <div class="control">
+            <label for="min-new-tokens-input">Min Tokens</label>
+            <input id="min-new-tokens-input" type="number" min="1" value="32">
+          </div>
+          <div class="control">
+            <label for="max-new-tokens-input">Max Tokens</label>
+            <input id="max-new-tokens-input" type="number" min="1" value="2048">
+          </div>
+          <div class="control">
+            <label for="temperature-input">Temperature</label>
+            <input id="temperature-input" type="number" min="0" max="2" step="0.1" value="0">
+          </div>
+          <div class="control">
+            <label for="max-gpu-memory-input">Max GPU GiB</label>
+            <input id="max-gpu-memory-input" type="number" min="1" placeholder="auto">
+          </div>
+          <label class="checkbox"><input id="lazy-load-input" type="checkbox" checked> Lazy load</label>
+          <label class="checkbox"><input id="sparse-load-input" type="checkbox" checked> Sparse/offload retry</label>
+          <label class="checkbox"><input id="no-shell-input" type="checkbox"> Disable shell tool</label>
+          <label class="checkbox"><input id="no-ocr-input" type="checkbox"> Disable OCR</label>
+        </div>
+
+        <div class="composer-footer">
+          <span class="hint">Runs happen in the selected workspace. Outputs stream below.</span>
+          <button id="run-button" type="submit" class="run-button">Run Agent</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
